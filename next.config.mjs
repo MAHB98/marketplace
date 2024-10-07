@@ -2,7 +2,7 @@ import { hostname } from "os";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.NODE_ENV === "development" ? undefined : "export",
+  // output: process.env.NODE_ENV === "development" ? undefined : "export",
   images: {
     remotePatterns: [
       {
