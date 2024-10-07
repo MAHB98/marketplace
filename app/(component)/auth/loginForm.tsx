@@ -21,16 +21,18 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 export const LoginForm = () => {
-  const [isPending, startTransition] = useTransition();
-  const param = useSearchParams();
-  const RedirectTo = param.get("callback");
-  const [errorMassage, setErrorMassage] = useState<string | null>();
+  // const [isPending, startTransition] = useTransition();
+  // const param = useSearchParams();
+  // const RedirectTo = param.get("callback");
+  // const [errorMassage, setErrorMassage] = useState<string | null>();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
-  const route = useRouter();
+  // const route = useRouter();
+  // console.log(route);
+
   return (
     <div className="bg-blue-300">
       <CardWrapper
@@ -38,7 +40,7 @@ export const LoginForm = () => {
         showSocial
         backButtonHref="/register"
         backButton="Don't have an account "
-        fallback={RedirectTo}
+        // fallback={RedirectTo}
       >
         <Form {...form}>
           <form
@@ -66,7 +68,8 @@ export const LoginForm = () => {
             //   }
             // }}
             onSubmit={form.handleSubmit(async (Form) => {
-              await submitHandler(Form, RedirectTo);
+              // await submitHandler(Form, RedirectTo);
+              await submitHandler(Form);
             })}
           >
             <FormField
