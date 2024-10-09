@@ -12,7 +12,7 @@ export const submitHandler = async (
   { email, password }: z.infer<typeof partialSchema>,
   RedirectTo?: string | null
 ) => {
-  await signIn("credentials", {
+  const res = await signIn("credentials", {
     email,
     password,
     redirectTo: RedirectTo || "/welcome",
@@ -24,18 +24,29 @@ export const submitHandler = async (
           return {
             error: "invalid user",
           };
+        case "CallbackRouteError":
+          console.log("from callback", error.cause?.err);
+
+          return { error: "Wrong Credential" };
         default:
-          console.log("somting went wrong");
+          console.log(
+            "something went wrong",
+            "from submit default",
+            error.type
+          );
 
           return { error: "something went wrong " };
       }
     } else if (error instanceof Error) {
       console.log(error.message, "error massage");
       if (error.message.includes("NEXT_REDIRECT")) {
-        redirect(RedirectTo || "/welcome");
+        // redirect(RedirectTo || "/welcome");
+        return { error: "NEXT_REDIRECT" };
       }
     } else {
       console.log(error);
+      return { error: "something went wrong" };
     }
   });
+  return res;
 };

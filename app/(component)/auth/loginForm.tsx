@@ -6,6 +6,7 @@ import { loginSchema } from "@/type";
 import { submitHandler } from "../../action/submit";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import FormErrorMassage from "./form-error";
 import { z } from "zod";
 import {
   Form,
@@ -24,13 +25,13 @@ export const LoginForm = () => {
   // const [isPending, startTransition] = useTransition();
   // const param = useSearchParams();
   // const RedirectTo = param.get("callback");
-  // const [errorMassage, setErrorMassage] = useState<string | null>();
+  const [errorMassage, setErrorMassage] = useState<string | null>();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
-  // const route = useRouter();
+  const route = useRouter();
   // console.log(route);
 
   return (
@@ -44,7 +45,7 @@ export const LoginForm = () => {
       >
         <Form {...form}>
           <form
-            className="flex flex-col gap-2  "
+            className="space-y-6 "
             // action={(form) => {
             //   const email = form.get("email");
             //   const password = form.get("password");
@@ -69,41 +70,53 @@ export const LoginForm = () => {
             // }}
             onSubmit={form.handleSubmit(async (Form) => {
               // await submitHandler(Form, RedirectTo);
-              await submitHandler(Form);
+              await submitHandler(Form).then((data) => {
+                // console.log(data, "from login form");
+                if (data?.error.includes("NEXT_REDIRECT"))
+                  route.push("welcome");
+                else setErrorMassage(data?.error);
+              });
             })}
           >
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="email@email.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="*****" type="password" />
-                  </FormControl>
-                  <FormMessage className="font-mono text-red" />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className=" bg-slate-600 hover:bg-slate-500">
-              {form.formState.isSubmitting ? "Uploading Product" : "SignIn"}
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>email</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="email@email.com"
+                        type="email"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="*****" type="password" />
+                    </FormControl>
+                    <FormMessage className="font-mono text-red" />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormErrorMassage error={errorMassage} />
+            <Button
+              type="submit"
+              className="w-full bg-slate-600 hover:bg-slate-500"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? "try to signIn" : "SignIn"}
             </Button>
           </form>
         </Form>

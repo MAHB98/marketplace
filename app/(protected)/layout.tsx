@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Navbar from "../(component)/Navbar";
+import AuthBtn from "../(component)/AUTH";
 
 export const metadata: Metadata = {
   title: "Market AdminPanel",

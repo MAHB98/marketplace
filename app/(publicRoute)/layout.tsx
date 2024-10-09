@@ -26,9 +26,9 @@ export default function MarketLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Card className="px-10  shadow-md w-full h-full ">
+    <Card className="px-10   shadow-md w-full h-full ">
       <CardHeader className="flex flex-col ">
-        <h1 className={cn("text-3xl text-center  ", font.className)}>
+        <h1 className={cn("text-3xl text-center  ", "font-serif")}>
           Welcome to Marketplace
         </h1>
         <AuthBtn />
