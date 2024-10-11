@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth/core": "^0.34.2",
+    "@auth/core": "^0.37.0",
     "@hookform/resolvers": "^3.9.0",
-    "@mahb98/mysql-adapter": "^0.0.1",
+    "@mahb98/mysql-adapter": "^0.1.2",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "bcryptjs": "^2.4.3",
@@ -19,9 +19,9 @@
     "clsx": "^2.1.1",
     "firacode": "^6.2.0",
     "lucide-react": "^0.416.0",
-    "mysql2": "^3.11.2",
+    "mysql2": "^3.11.3",
     "next": "^14.2.14",
-    "next-auth": "^5.0.0-beta.19",
+    "next-auth": "^5.0.0-beta.22",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",

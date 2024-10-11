@@ -3,7 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react";
+import { error } from "console";
+import { submitHandler } from "@/app/action/submit";
+// import { signIn } from "@/auth";
 export const Social = ({ fallback }: { fallback?: string | null }) => {
   return (
     <div className=" flex items-center w-full gap-x-2">
@@ -12,7 +14,7 @@ export const Social = ({ fallback }: { fallback?: string | null }) => {
         className="w-full"
         variant={"secondary"}
         onClick={async () => {
-          await signIn("google", { callbackUrl: fallback || "/" });
+          await submitHandler({}, "google");
         }}
       >
         <FcGoogle className="h-5 w-5" />
@@ -22,12 +24,7 @@ export const Social = ({ fallback }: { fallback?: string | null }) => {
         className="w-full"
         variant={"secondary"}
         onClick={async () => {
-          await signIn("github", { callbackUrl: fallback || "/" }).catch(
-            (er) => {
-              console.log(er);
-              throw er;
-            }
-          );
+          submitHandler({}, "github");
         }}
       >
         <FaGithub className="h-5 w-5 " />

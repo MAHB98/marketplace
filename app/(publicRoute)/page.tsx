@@ -6,9 +6,6 @@ import { z } from "zod";
 import { ProductSchema } from "@/type";
 const page = async () => {
   const res = (await getProducts()) as z.infer<typeof ProductSchema>[];
-  const session = await auth();
-
-  console.log(session);
 
   return (
     <div className="flex flex-col">

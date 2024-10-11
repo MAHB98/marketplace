@@ -128,7 +128,7 @@ export const RegisterForm = () => {
               <p className="p-2 text-red-600">{errorMassage}</p>
             )}
             <Button type="submit" className=" bg-slate-600 hover:bg-slate-500">
-              {form.formState.isSubmitting ? "Uploading Product" : "register"}
+              {form.formState.isSubmitting ? "registering user" : "register"}
             </Button>
           </form>
         </Form>

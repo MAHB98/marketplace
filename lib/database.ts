@@ -1,7 +1,8 @@
 import { ProductSchema } from "@/type";
+import { Adapter } from "@auth/core/adapters";
 import mysql from "mysql2";
 import { z } from "zod";
-import mysqlAdapter from "@mahb98/mysql-adapter";
+import mysqlAdapter from "@mahb98/mysql-adapter/";
 export const pool = mysql
   .createPool({
     host: process.env.mysql_host,

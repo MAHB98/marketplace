@@ -10,8 +10,15 @@ import { z } from "zod";
 
 export const submitHandler = async (
   { email, password }: z.infer<typeof partialSchema>,
+  credentials?: string,
   RedirectTo?: string | null
 ) => {
+  if (credentials) {
+    console.log(credentials);
+
+    const res = await signIn(credentials);
+    return res;
+  }
   const res = await signIn("credentials", {
     email,
     password,
