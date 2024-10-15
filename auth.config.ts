@@ -4,13 +4,19 @@ import Github from "next-auth/providers/github";
 import credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { loginSchema } from "./type";
+import { db } from "./lib/database";
 
 // Notice this is only an object, not a full Auth.js instance
 export default {
   secret: process.env.auth_secret,
   trustHost: true,
   providers: [
-    Google,
+    Google({
+      // profile(profile) {
+      //   console.log(profile);
+      //   return profile;
+      // },
+    }),
     Github,
     credentials({
       authorize: async (credentials, req) => {
@@ -62,6 +68,28 @@ export default {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      if (!token.role) {
+        const getUser = await db.getUser!(token.sub as string);
+        console.log(getUser, "getUser");
+        if (getUser) token.role = getUser.role;
+      }
+
+      return token;
+    },
+    session({ token, session }) {
+      if (token && token.role) {
+        session.user.role = token.role as string;
+      }
+
+      return session;
+    },
+  },
 } satisfies NextAuthConfig;
 
 // providers: [

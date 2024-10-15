@@ -10,6 +10,7 @@ import Credentials from "next-auth/providers/credentials";
 declare module "@auth/core/adapters" {
   interface AdapterUser {
     password: string;
+    role?: string;
   }
 }
 declare module "next-auth" {
@@ -20,22 +21,7 @@ declare module "next-auth" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: db,
   session: { strategy: "jwt" },
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-      }
-      console.log(token, user);
-      return token;
-    },
-    session({ user, token, session }) {
-      if (token && token.role) {
-        session.user.role = token.role as string;
-      }
-      return session;
-    },
-  },
+
   pages: {
     signIn: "/signIn",
     signOut: "/signOut",

@@ -5,7 +5,7 @@ import { getProducts } from "@/lib/database";
 import { z } from "zod";
 import { ProductSchema } from "@/type";
 const page = async () => {
-  const res = (await getProducts()) as z.infer<typeof ProductSchema>[];
+  // const res = (await getProducts()) as z.infer<typeof ProductSchema>[];
 
   return (
     <div className="flex flex-col">

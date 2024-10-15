@@ -28,7 +28,7 @@ export default auth((req) => {
         adminRoute.includes(nextUrl.pathname) &&
         req.auth?.user?.role !== "admin"
       ) {
-        console.log("redirected by middleware");
+        console.log(req.auth, "redirected by middleware");
 
         return NextResponse.redirect(new URL("/", nextUrl));
       }
