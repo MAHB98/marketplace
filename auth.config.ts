@@ -4,7 +4,7 @@ import Github from "next-auth/providers/github";
 import credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { loginSchema } from "./type";
-import { db } from "./lib/database";
+import { getUserbyId } from "./getUserbyId";
 
 // Notice this is only an object, not a full Auth.js instance
 export default {
@@ -75,7 +75,7 @@ export default {
         token.role = user.role;
       }
       if (!token.role) {
-        const getUser = await db.getUser!(token.sub as string);
+        const getUser = await getUserbyId(token.sub as string);
         console.log(getUser, "getUser");
         if (getUser) token.role = getUser.role;
       }
