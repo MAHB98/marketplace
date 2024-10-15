@@ -7,13 +7,14 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json("body is require");
   });
   console.log(data);
-
+  let user;
   // if (!id) {
   //   id = "2";
   // }
   // console.log(id);
-
-  const user = await db.getUserByEmail!(data.email);
+  if (data.email) user = await db.getUserByEmail!(data.email);
+  else if (data.id) user = await db.getUser!(data.id);
+  else user = null;
   console.log(user);
 
   return NextResponse.json(user);

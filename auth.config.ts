@@ -68,28 +68,6 @@ export default {
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-      }
-      if (!token.role) {
-        const getUser = await getUserbyId(token.sub as string);
-        console.log(getUser, "getUser");
-        if (getUser) token.role = getUser.role;
-      }
-
-      return token;
-    },
-    session({ token, session }) {
-      if (token && token.role) {
-        session.user.role = token.role as string;
-      }
-
-      return session;
-    },
-  },
 } satisfies NextAuthConfig;
 
 // providers: [

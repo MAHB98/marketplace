@@ -23,16 +23,17 @@ export default auth((req) => {
       return Response.redirect(
         new URL(req.auth?.user?.role !== "admin" ? "/" : "/admin", nextUrl)
       );
-    } else {
-      if (
-        adminRoute.includes(nextUrl.pathname) &&
-        req.auth?.user?.role !== "admin"
-      ) {
-        console.log(req.auth, "redirected by middleware");
-
-        return NextResponse.redirect(new URL("/", nextUrl));
-      }
     }
+    // else {
+    //   if (
+    //     adminRoute.includes(nextUrl.pathname) &&
+    //     req.auth?.user?.role !== "admin"
+    //   ) {
+    //     console.log(req.auth, "redirected by middleware");
+
+    //     return NextResponse.redirect(new URL("/", nextUrl));
+    //   }
+    // }
   }
 });
 export const config = {
