@@ -8,45 +8,44 @@ import bcryptjs from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
 
 declare module "@auth/core/adapters" {
-  interface AdapterUser {
-    password: string;
-    role?: string;
-  }
+ interface AdapterUser {
+  password: string;
+  role?: string;
+ }
 }
 declare module "next-auth" {
-  interface User {
-    role?: string;
-  }
+ interface User {
+  role?: string;
+ }
 }
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: db,
-  session: { strategy: "jwt" },
+ adapter: db,
+ session: { strategy: "jwt" },
 
-  pages: {
-    signIn: "/signIn",
-    signOut: "/signOut",
+ pages: {
+  signIn: "/signIn",
+  signOut: "/signOut",
+ },
+ callbacks: {
+  async jwt({ token, user }) {
+   if (user) {
+    token.id = user.id;
+    token.role = user.role;
+   }
+   if (!token.role) {
+    const getUser = await db.getUser!(token.sub as string);
+    if (getUser) token.role = getUser.role;
+   }
+
+   return token;
   },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-      }
-      if (!token.role) {
-        const getUser = await db.getUser!(token.sub as string);
-        console.log(getUser, "getUser");
-        if (getUser) token.role = getUser.role;
-      }
+  session({ token, session }) {
+   if (token && token.role) {
+    session.user.role = token.role as string;
+   }
 
-      return token;
-    },
-    session({ token, session }) {
-      if (token && token.role) {
-        session.user.role = token.role as string;
-      }
-
-      return session;
-    },
+   return session;
   },
-  ...authConfig,
+ },
+ ...authConfig,
 });

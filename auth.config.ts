@@ -8,66 +8,73 @@ import { getUserbyId } from "./getUserbyId";
 
 // Notice this is only an object, not a full Auth.js instance
 export default {
-  secret: process.env.auth_secret,
-  trustHost: true,
-  providers: [
-    Google({
-      // profile(profile) {
-      //   console.log(profile);
-      //   return profile;
-      // },
-    }),
-    Github,
-    credentials({
-      authorize: async (credentials, req) => {
-        const origin = req.headers.get("origin");
-        const { data, success } = loginSchema.safeParse(credentials);
+ secret: process.env.auth_secret,
+ trustHost: true,
+ providers: [
+  Google({
+   // profile(profile) {
+   //   console.log(profile);
+   //   return profile;
+   // },
+  }),
+  Github,
+  credentials({
+   authorize: async (credentials, req) => {
+    const origin = req.headers.get("origin");
+    const url = req.url;
+    const { data, success } = loginSchema.safeParse(credentials);
 
-        if (!success) return null;
-        const email = data.email;
+    if (!success) return null;
+    const email = data.email;
+    const request = new Request(url, {
+     method: "POST",
+     body: JSON.stringify({
+      email,
+     }),
+    });
+    const res = (await import("@/app/api/getUser/route")).POST(request);
+    // const res = await fetch(origin + "/api/getUser", {
+    //  method: "POST",
+    //  headers: {
+    //   "Content-Type": "application/json",
+    //  },
+    //  body: JSON.stringify({
+    //   email,
+    //  }),
+    // });
+    const getUser = await (await res).json();
+    console.log("getUser", getUser);
 
-        const res = await fetch(origin + "/api/getUser", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-          }),
-        });
-        const getUser = await res.json();
-        // const getUser = await db.getUserByEmail!(credentials.email as string);
-        if (!getUser) return null;
-        console.log(getUser);
+    // const getUser = await db.getUserByEmail!(credentials.email as string);
+    if (!getUser) return null;
 
-        const compare = await bcrypt.compare(
-          data.password as string,
-          getUser.password
-        );
-        if (!compare) {
-          console.log("wrong password");
+    const compare = await bcrypt.compare(
+     data.password as string,
+     getUser.password
+    );
+    if (!compare) {
+     console.log("wrong password");
 
-          return null;
-        }
-        console.log(getUser);
+     return null;
+    }
 
-        return getUser;
-      },
+    return getUser;
+   },
 
-      credentials: {
-        email: {
-          label: "email",
-          type: "email",
-          placeholder: "email",
-        },
-        password: {
-          label: "password",
-          type: "password",
-          placeholder: "password",
-        },
-      },
-    }),
-  ],
+   credentials: {
+    email: {
+     label: "email",
+     type: "email",
+     placeholder: "email",
+    },
+    password: {
+     label: "password",
+     type: "password",
+     placeholder: "password",
+    },
+   },
+  }),
+ ],
 } satisfies NextAuthConfig;
 
 // providers: [

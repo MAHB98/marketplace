@@ -14,7 +14,17 @@ import { PiSignOutBold } from "react-icons/pi";
 // import Link from "next/link";
 const Navbar = () => {
   return (
-    <>
+    // <NavigationMenu>
+    //   <NavigationMenuList>
+    //     <NavigationMenuItem>
+    //       <Link href={"/"}>home</Link>
+    //     </NavigationMenuItem>
+    //     <NavigationMenuItem>
+    //       <Link href={"/about"}>about</Link>
+    //     </NavigationMenuItem>
+    //   </NavigationMenuList>
+    // </NavigationMenu>
+    (<>
       <input type="checkbox" className=" peer hidden select-none" id="peer" />
       <label
         htmlFor="peer"
@@ -133,17 +143,7 @@ const Navbar = () => {
           </BetterLink>
         </span>
       </div>
-    </>
-    // <NavigationMenu>
-    //   <NavigationMenuList>
-    //     <NavigationMenuItem>
-    //       <Link href={"/"}>home</Link>
-    //     </NavigationMenuItem>
-    //     <NavigationMenuItem>
-    //       <Link href={"/about"}>about</Link>
-    //     </NavigationMenuItem>
-    //   </NavigationMenuList>
-    // </NavigationMenu>
+    </>)
   );
 };
 export default Navbar;

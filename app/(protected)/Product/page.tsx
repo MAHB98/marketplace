@@ -1,4 +1,6 @@
-// "use client";
+"use client";
+
+import { ProductForm } from "@/app/(component)/Product";
 
 // import Image from "next/image";
 // import { createProduct } from "@/app/action/createProduct";
@@ -211,9 +213,7 @@
 //   );
 // };
 // export default Page;
-"use client";
-import { createProduct } from "./createProduct";
 const page = () => {
-  return <div>page</div>;
+  return <ProductForm />;
 };
 export default page;
