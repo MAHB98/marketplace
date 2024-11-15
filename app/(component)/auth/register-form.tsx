@@ -4,7 +4,7 @@ import { CardWrapper } from "./card-wrapper";
 import { startTransition, useEffect, useState, useTransition } from "react";
 import { userSchema } from "@/type";
 import { submitHandler } from "../../action/submit";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { z } from "zod";
 
 import { Input } from "@/components/ui/input";
@@ -13,8 +13,8 @@ import { Register } from "@/app/action/register";
 import PasswordBtn from "../PasswordBtn";
 export const RegisterForm = () => {
  // const [isPending, startTransition] = useTransition();
- const param = useSearchParams();
- const RedirectTo = param.get("callback");
+ //  const RedirectTo = param.get("callback");
+ let RedirectTo = null;
  const [errorMassage, setErrorMassage] = useState<string | null>();
 
  const route = useRouter();

@@ -32,15 +32,15 @@ const FilePreview = ({
     >[]
   | null
  >(null);
- useEffect(() => {
-  reres?.map((ar, i) => {
-   if (ar.status == "fulfilled") {
-    setFilePath((per) =>
-     per ? per + "," + ar.value.filePath : ar.value.filePath
-    );
-   }
-  });
- }, [reres]);
+
+ reres?.map((ar, i) => {
+  if (ar.status == "fulfilled") {
+   setFilePath((per) =>
+    per ? per + "," + ar.value.filePath : ar.value.filePath
+   );
+  }
+ });
+
  //   const sendImage = async () => {
  //     // const params = {
  //     //   requestBody: {

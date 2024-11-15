@@ -8,7 +8,7 @@ import Image from "next/image";
 import ProductRender from "../(component)/ProductRender";
 import Loading from "./loading";
 
-const page = () => {
+const FirstPage = () => {
  const limit = "10";
  const [product, setProduct] = useState<z.infer<typeof ProductSchema>[] | null>(
   null
@@ -31,4 +31,4 @@ const page = () => {
   </Suspense>
  );
 };
-export default page;
+export default FirstPage;
