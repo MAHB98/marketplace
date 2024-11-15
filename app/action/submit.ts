@@ -14,16 +14,16 @@ export const submitHandler = async (
  credentials?: string,
  RedirectTo?: string | null
 ) => {
+ if (credentials) {
+  const res = await signIn(credentials);
+  return res;
+ }
  if (!(form instanceof FormData)) {
   return { error: "it must be a form data" };
  }
  const Form = Object.fromEntries(form.entries());
  const { success, data, error } = loginSchema.safeParse(Form);
  if (!success) return { error: `we got a error ${error}` };
- if (credentials) {
-  const res = await signIn(credentials);
-  return res;
- }
  const { email, password } = data;
  const res = await signIn("credentials", {
   email,
