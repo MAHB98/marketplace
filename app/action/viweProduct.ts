@@ -12,7 +12,6 @@ export const viweProduct = async ({ limit }: { limit: string }) => {
  });
  if (res) {
   const reres = res as z.infer<typeof ProductSchema>[];
-  console.log(res, "res");
   return reres;
  }
  return null;

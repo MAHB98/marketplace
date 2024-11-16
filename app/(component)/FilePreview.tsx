@@ -34,6 +34,8 @@ const FilePreview = ({
  >(null);
  // eslint-disable-next-line no-use-before-define
  useEffect(() => {
+  console.log("here in filePreview");
+
   reres?.map((ar, i) => {
    if (ar.status == "fulfilled") {
     setFilePath((per) =>
@@ -41,7 +43,7 @@ const FilePreview = ({
     );
    }
   });
- }, []);
+ }, [reres]);
 
  //   const sendImage = async () => {
  //     // const params = {
