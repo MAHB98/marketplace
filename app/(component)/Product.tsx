@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { createProduct } from "../action/createProduct";
 import DragandDrop from "./DragandDrop";
+import { Input } from "@/components/ui/input";
 
 export const ProductForm = () => {
  const [errorMassage, setErrorMassage] = useState<string | null>();
@@ -13,9 +14,9 @@ export const ProductForm = () => {
  const route = useRouter();
  const [filePath, setFilePath] = useState<string | null>(null);
  const styleForInputInform =
-  "p-2 font-Poppins text-lg font-bold text-slate-900 placeholder:text-slate-700 rounded bg-green-300 dark:bg-slate-400 dark:text-blue-700 italic";
+  " font-Poppins text-base font-bold text-slate-900 placeholder:text-slate-700 rounded bg-green-300 dark:bg-slate-400 dark:text-blue-700 italic";
  return (
-  <div className="w-full   p-2 h-full flex flex-1 min-w-fit justify-center self-center ">
+  <div className="w-full   flex flex-1 min-w-fit justify-center self-center ">
    <Card
     className=" py-5 shadow-md 
     bg-[#094088]"
@@ -23,7 +24,7 @@ export const ProductForm = () => {
     <CardHeader>
      <CardTitle
       className="w-full text-center capitalize
-     italic font-semibold font-mono"
+     italic font-semibold font-mono "
      >
       Create a product
      </CardTitle>
@@ -39,32 +40,42 @@ export const ProductForm = () => {
        } else alert("image is necessary ");
       }}
      >
-      <input
+      <Input
        name="name"
        placeholder="name"
        type="text"
+       required
        className={styleForInputInform}
       />
-      <input
+      <Input
+       required
        name="category"
        placeholder="category"
        type="text"
        className={styleForInputInform}
       />
-      <input
+      <Input
+       required
+       name="subcategory"
+       placeholder="subcategory"
+       type="text"
+       className={styleForInputInform}
+      />
+      <Input
        name="Specifications"
        placeholder="Specifications"
        type="text"
        className={styleForInputInform}
       />
-      <input
+      <Input
        name="Description"
        placeholder="Description"
        type="text"
        className={styleForInputInform}
       />
-      <input
+      <Input
        name="price"
+       required
        placeholder="price"
        type="number"
        onChange={(e) => {
@@ -74,7 +85,7 @@ export const ProductForm = () => {
       />
       <DragandDrop setFilePath={setFilePath} />
 
-      <input
+      <Input
        id="submitButton"
        type="submit"
        className="hover:bg-green-400 "

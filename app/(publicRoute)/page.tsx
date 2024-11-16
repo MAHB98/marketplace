@@ -1,34 +1,20 @@
-"use client";
-import { Suspense, useEffect, useState } from "react";
+// "use client";
 import { viweProduct } from "../action/viweProduct";
-import { z } from "zod";
-import { ProductSchema } from "@/type";
-import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
 import ProductRender from "../(component)/ProductRender";
-import Loading from "./loading";
 
-const FirstPage = () => {
+const FirstPage = async () => {
  const limit = "10";
- const [product, setProduct] = useState<z.infer<typeof ProductSchema>[] | null>(
-  null
- );
- useEffect(() => {
-  res();
- }, []);
- const res = async () => {
-  // if (res.length > 0) {
-  //  console.log("here");
-  // }
-  const res = await viweProduct({ limit });
-  setProduct(res);
- };
+ //  const [product, setProduct] = useState<z.infer<typeof ProductSchema>[] | null>(
+ //   null
+ //  );
+ //  useEffect(() => {
+ //   res();
+ //  }, []);
+ const product = await viweProduct({ limit });
  return (
-  <Suspense fallback={<Loading />}>
-   <div>
-    {product && product.map((ar, i) => <ProductRender key={i} product={ar} />)}
-   </div>
-  </Suspense>
+  <div>
+   {product && product.map((ar, i) => <ProductRender key={i} product={ar} />)}
+  </div>
  );
 };
 export default FirstPage;

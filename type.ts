@@ -31,6 +31,7 @@ export const ProductSchema = z.object({
  Description: z.string().optional(),
  Specifications: z.string().optional(),
  category: z.string(),
+ subcategory: z.string(),
 });
 export const partialSchema = userSchema.partial();
 export type productType = z.infer<typeof ProductSchema>;

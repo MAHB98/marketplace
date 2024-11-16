@@ -3,28 +3,18 @@ import { addingProduct } from "@/lib/database";
 import { ProductSchema } from "@/type";
 import fs from "node:fs/promises";
 import { z } from "zod";
-export const createProduct = async (form: FormData) => {
- console.log(form);
- const name = form.get("name");
- const price = form.get("price");
- const Specifications = form.get("Specifications");
- const Description = form.get("Description");
- const image = form.get("image");
- const category = form.get("category");
- console.log(category);
-
- const { data, success, error } = ProductSchema.safeParse({
-  name,
-  price,
-  Specifications,
-  Description,
-  image,
-  category,
- });
+export const createProduct = async (form: unknown) => {
+ if (!(form instanceof FormData)) {
+  return { error: "must be a form " };
+ }
+ const { data, success, error } = ProductSchema.safeParse(
+  Object.fromEntries(form.entries())
+ );
  if (success) {
   console.log(data.category, "data.category");
 
   addingProduct({
+   subcategory: data.subcategory,
    category: data.category,
    image: data.image,
    price: data.price,

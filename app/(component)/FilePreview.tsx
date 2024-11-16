@@ -32,14 +32,16 @@ const FilePreview = ({
     >[]
   | null
  >(null);
-
- reres?.map((ar, i) => {
-  if (ar.status == "fulfilled") {
-   setFilePath((per) =>
-    per ? per + "," + ar.value.filePath : ar.value.filePath
-   );
-  }
- });
+ // eslint-disable-next-line no-use-before-define
+ useEffect(() => {
+  reres?.map((ar, i) => {
+   if (ar.status == "fulfilled") {
+    setFilePath((per) =>
+     per ? per + "," + ar.value.filePath : ar.value.filePath
+    );
+   }
+  });
+ }, []);
 
  //   const sendImage = async () => {
  //     // const params = {
@@ -157,7 +159,7 @@ const FilePreview = ({
              <FaClipboardCheck className="fill-green-500" />
             ) : (
              <div>
-              <input type="submit" id={"failedSubmit "} />
+              <input type="submit" hidden id={"failedSubmit "} />
               <MdSmsFailed className="fill-red-600" />
               <label htmlFor="failedSubmit"></label>
              </div>
@@ -199,7 +201,7 @@ const FilePreview = ({
     hidden={click}
     onClick={async () => {
      setClick(true);
-     sendImage(Files[0]);
+     //  sendImage(Files[0]);
      for (let index = 0; index < Files.length; index++) {
       res = res
        ? res.concat(sendImage(Files[index]))

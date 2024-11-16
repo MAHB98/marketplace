@@ -16,17 +16,19 @@ export const addingProduct = async ({
  image,
  name,
  category,
+ subcategory,
  price,
  Description,
  Specifications,
 }: z.infer<typeof ProductSchema>) => {
  const sql =
-  "insert into products(name,price,image,category,Description,Specifications) value(?,?,?,?,?,?)";
+  "insert into products(name,price,image,category,subcategory,Description,Specifications) value(?,?,?,?,?,?)";
  const [res] = await pool.query(sql, [
   name,
   price,
   image,
   category,
+  subcategory,
   Description,
   Specifications,
  ]);

@@ -54,6 +54,8 @@ const DragandDrop = ({
     >
      <input
       id="images"
+      required
+      accept="image/*"
       name="images"
       placeholder="images"
       value={Files && Files.length > 0 ? inputValue : ""}
