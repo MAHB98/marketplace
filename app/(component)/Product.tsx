@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -7,10 +7,12 @@ import { createProduct } from "../action/createProduct";
 import DragandDrop from "./DragandDrop";
 import { Input } from "@/components/ui/input";
 import FormErrorMassage from "./auth/form-error";
+import { Button } from "@/components/ui/button";
 
 export const ProductForm = () => {
  const [errorMassage, setErrorMassage] = useState<string | null>();
  const [Files, setFiles] = useState<File[] | null>(null);
+ const [isPending, startTransition] = useTransition();
 
  const [filePath, setFilePath] = useState<string | null>(null);
  const styleForInputInform =
@@ -36,17 +38,18 @@ export const ProductForm = () => {
        if (filePath) {
         form.delete("images");
         form.append("image", filePath);
-        const res = await createProduct(form).catch((err) => {
-         if (err instanceof Error) setErrorMassage(err.message);
+        startTransition(async () => {
+         const res = await createProduct(form).catch((err) => {
+          if (err instanceof Error) setErrorMassage(err.message);
 
-         return null;
+          return null;
+         });
+         console.log(res);
+         if (res && res == "success") {
+          alert("product created ");
+          setFiles(null);
+         } else setErrorMassage(res?.error);
         });
-        console.log(res);
-
-        if (res && res == "success") {
-         alert("product created ");
-         setFiles(null);
-        } else setErrorMassage(res?.error);
        } else alert("image is necessary ");
       }}
      >
@@ -100,14 +103,9 @@ export const ProductForm = () => {
        setFiles={setFiles}
       />
 
-      <Input
-       id="submitButton"
-       type="submit"
-       className="hover:bg-green-400 "
-       placeholder="
-              createProduct
-            "
-      />
+      <Button className="self-center" disabled={isPending}>
+       {isPending ? "try to create product" : "create Product "}
+      </Button>
      </form>
     </CardContent>
    </Card>
