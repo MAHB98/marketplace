@@ -22,6 +22,10 @@ const nextConfig = {
     protocol: "https",
     hostname: "upcdn.io",
    },
+   {
+    protocol: "https",
+    hostname: "ik.imagekit.io",
+   },
   ],
  },
 };

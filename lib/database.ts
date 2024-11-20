@@ -9,6 +9,13 @@ export const pool = mysql
   user: process.env.mysql_user,
   password: process.env.mysql_password,
   database: process.env.mysql_database,
+  waitForConnections: true,
+  connectionLimit: 10,
+  maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
+  idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
+  queueLimit: 0,
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0,
  })
  .promise();
 export const db = mysqlAdapter(pool);
@@ -38,5 +45,6 @@ export const addingProduct = async ({
 export const getProducts = async ({ limit }: { limit: string }) => {
  const sql = `SELECT * from products order by id desc limit ${limit}`;
  const [res] = await pool.query(sql);
+
  return res;
 };

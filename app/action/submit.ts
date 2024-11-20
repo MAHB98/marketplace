@@ -14,10 +14,14 @@ export const submitHandler = async (
  credentials?: string,
  RedirectTo?: string | null
 ) => {
+ console.log("im here to sign in");
+
  if (credentials) {
   const res = await signIn(credentials);
   return res;
  }
+ console.log("im still here to sign in");
+
  if (!(form instanceof FormData)) {
   return { error: "it must be a form data" };
  }

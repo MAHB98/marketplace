@@ -1,15 +1,11 @@
 // "use server"
-import { error } from "console";
-
 import Image from "next/image";
-import nodeFetch from "node-fetch";
 import { MdSmsFailed } from "react-icons/md";
-
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { sendImage } from "../action/sendImage";
-import { FileDetails, UploadResult } from "@bytescale/sdk";
 import { FaClipboardCheck } from "react-icons/fa";
 export const ALLOWED_FILE_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+type imageResult = { fileId: string; url: string; filePath: string };
 export function validateFileType(file: File) {
  return ALLOWED_FILE_TYPES.includes(file.type);
 }
@@ -23,19 +19,10 @@ const FilePreview = ({
  setFilePath: Dispatch<SetStateAction<string | null>>;
 }) => {
  const [click, setClick] = useState(false);
- let res: Promise<UploadResult>[];
- const [reres, setReres] = useState<
-  | PromiseSettledResult<
-     Omit<FileDetails, "etag"> & {
-      etag: string;
-     }
-    >[]
-  | null
- >(null);
+ let res: Promise<imageResult>[];
+ const [reres, setReres] = useState<PromiseSettledResult<imageResult>[]>();
  // eslint-disable-next-line no-use-before-define
  useEffect(() => {
-  console.log("here in filePreview");
-
   reres?.map((ar, i) => {
    if (ar.status == "fulfilled") {
     setFilePath((per) =>
@@ -44,81 +31,6 @@ const FilePreview = ({
    }
   });
  }, [reres]);
-
- //   const sendImage = async () => {
- //     // const params = {
- //     //   requestBody: {
- //     //     "size": Files[0].size,
- //     //     "originalFileName": Files[0].name,
-
- //     //   }
- //     // }
- // //     const size=Files[0].size
- // //     const originalFileName=Files[0].name
- // //     const baseUrl  = "https://api.bytescale.com";
- // //   const path     = `/v2/accounts/${process.env.NEXT_PUBLIC_accountId}/uploads`;
- // //   const response = await fetch(`${baseUrl}${path}`, {
- // //     method: "POST",
- // //     body: JSON.stringify({size ,originalFileName}),
- // //     headers: {
- // //       "Authorization": `Bearer ${process.env.NEXT_PUBLIC_apiKey}`,
- // //       "Content-Type": "application/json",
- // //     }
- // //   });
- // //   const result = await response.json();
- // //   if (Math.floor(response.status / 100) !== 2)
- // //     throw new Error(`Bytescale API Error: ${JSON.stringify(result)}`);
- // //     const {uploadId, uploadPartIndex,uploadUrl,range }=result.uploadParts.first
- // // const {inclusiveEnd,
- // // inclusiveStart
- // // }=range
- // //     console.log(uploadId, uploadPartIndex,uploadUrl,inclusiveEnd,inclusiveStart)
- // //     const GetUploadPart = await fetch(baseUrl +path + "/" + uploadId + "/parts/" + uploadPartIndex, {
- // //       method: "GET",
- // //       headers: {
- // //          "Authorization": `Bearer ${process.env.NEXT_PUBLIC_apiKey}`,
- // //       }
- // // })
- // // console.log(GetUploadPart);
-
- //     //     const tryUpload = await fetch(uploadUrl, {
- // //       method: "PUT",
- // //       mode: "cors",
-
- // //       headers: {
- // //       // "Authorization": `Bearer ${process.env.NEXT_PUBLIC_apiKey}`,
- // // // "Access-Control-Allow-Origin": "*",
- // //         "Content-Length": "2908049"
- // //         // ,"Access-Control-Allow-Origin":"http://localhost:3000"
- // //       },
- // //       body: JSON.stringify({
- // //         inclusiveStart,
- // //         inclusiveEnd
- // //       })
- // //     })
- //     // console.log(await tryUpload.json());
-
- //  };
-
- //   async function beginMultipartUpload(params) {
- //     console.log(params.requestBody);
- //     sendImage()
- //   const baseUrl  = "https://api.bytescale.com";
- //   const path     = `/v2/accounts/${params.accountId}/uploads`;
- //   const entries  = obj => Object.entries(obj).filter(([,val]) => (val ?? null) !== null);
- //   const response = await fetch(`${baseUrl}${path}`, {
- //     method: "POST",
- //     body: JSON.stringify(params.requestBody),
- //     headers: Object.fromEntries(entries({
- //       "Authorization": `Bearer ${params.apiKey}`,
- //       "Content-Type": "application/json",
- //     }))
- //   });
- //   const result = await response.json();
- //   if (Math.floor(response.status / 100) !== 2)
- //     throw new Error(`Bytescale API Error: ${JSON.stringify(result)}`);
- //   return result;
- // }
  return (
   <div>
    <table className="">
@@ -205,11 +117,16 @@ const FilePreview = ({
      setClick(true);
      //  sendImage(Files[0]);
      for (let index = 0; index < Files.length; index++) {
+      // const res = sendImage(Files[index]);
+      // console.log(res);
+
       res = res
        ? res.concat(sendImage(Files[index]))
        : [sendImage(Files[index])];
-      // console.log(res);
      }
+     //  const resJson = await Promise.allSettled(res);
+     //  console.log(resJson);
+
      setReres(await Promise.allSettled(res));
     }}
    />

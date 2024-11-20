@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Register } from "@/app/action/register";
 import PasswordBtn from "../PasswordBtn";
 export const RegisterForm = () => {
- // const [isPending, startTransition] = useTransition();
+ const [isPending, startTransition] = useTransition();
  //  const RedirectTo = param.get("callback");
  let RedirectTo = null;
  const [errorMassage, setErrorMassage] = useState<string | null>();
@@ -23,35 +23,17 @@ export const RegisterForm = () => {
    <CardWrapper
     headerLabel="Welcome back"
     showSocial
-    backButtonHref="/signIn"
+    backButtonHref="/auth/signIn"
     backButton="Already have an account "
    >
     <form
      className="flex flex-col gap-2  "
      action={(form) => {
-      const email = form.get("email");
-      const password = form.get("password");
-      const name = form.get("name");
-
-      const { data, success, error } = userSchema.safeParse({
-       email,
-       password,
-       name,
+      startTransition(() => {
+       Register(form, RedirectTo).then((data) => {
+        data && setErrorMassage(data?.error);
+       });
       });
-      if (success) {
-       startTransition(() => {
-        Register(data, RedirectTo).then((data) => {
-         data && setErrorMassage(data?.error);
-        });
-       });
-      } else {
-       let errorMassages = "";
-
-       error.issues.forEach((issue) => {
-        errorMassages = errorMassages + issue.message;
-       });
-       setErrorMassage(errorMassages);
-      }
      }}
      // onSubmit={form.handleSubmit(async (Form) => {
      //   await Register(Form).then((res) => {
@@ -89,10 +71,14 @@ export const RegisterForm = () => {
      /> */}
      <PasswordBtn />
      {!!errorMassage && <p className="p-2 text-red-600">{errorMassage}</p>}
-     <Button type="submit" className=" bg-slate-600 hover:bg-slate-500">
+     <Button
+      type="submit"
+      disabled={isPending}
+      className=" bg-slate-600 hover:bg-slate-500"
+     >
       {/* {form.formState.isSubmitting ? "registering user" : "register"}
        */}
-      register
+      {isPending ? "trying to registering you" : "register"}
      </Button>
     </form>
    </CardWrapper>

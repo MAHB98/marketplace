@@ -46,13 +46,13 @@ const Navbar = () => {
       <BetterLink
        active="fill-red-400"
        className="flex flex-row gap-2 my-2"
-       href="admin"
+       href="protected/admin"
       >
        <MdHome className="size-6 fill-yellow-300" />
        <p className="self-end text-center">Home</p>
       </BetterLink>
       <BetterLink
-       href="Product"
+       href="protected/Product"
        active="fill-red-400"
        className="flex flex-row gap-2 my-2"
       >
@@ -62,7 +62,7 @@ const Navbar = () => {
       <BetterLink
        active="fill-red-400"
        className="flex flex-row gap-2 my-2"
-       href="Order"
+       href="protected/Order"
       >
        <HiBarsArrowUp className="fill-yellow-300 size-6" />
        <p>Orders</p>
@@ -70,7 +70,7 @@ const Navbar = () => {
       <BetterLink
        active="fill-red-400"
        className="flex flex-row gap-2 my-2"
-       href="setting"
+       href="protected/setting"
       >
        <HiMiniCog8Tooth className="fill-yellow-300 size-6" />
        <p>Setting</p>
@@ -79,7 +79,7 @@ const Navbar = () => {
      <BetterLink
       active="fill-red-400"
       className="fill-yellow-400 self-end place-self-end   flex"
-      href="signOut"
+      href="auth/signOut"
      >
       <p className="capitalize font-Poppins font-medium italic text-center">
        signOut

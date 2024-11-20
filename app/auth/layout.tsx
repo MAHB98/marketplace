@@ -12,7 +12,7 @@ export default function MarketLayout({
 }>) {
  return (
   <div
-   className="w-full h-full flex items-center 
+   className="w-full min-h-screen flex items-center 
     justify-center  bg-blue-950"
   >
    {children}

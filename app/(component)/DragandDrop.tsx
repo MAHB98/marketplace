@@ -4,11 +4,14 @@ import { acceptedFile } from "./acceptedFile";
 import FilePreview from "./FilePreview";
 
 const DragandDrop = ({
+ Files,
  setFilePath,
+ setFiles,
 }: {
+ Files: File[] | null;
+ setFiles: Dispatch<SetStateAction<File[] | null>>;
  setFilePath: Dispatch<SetStateAction<string | null>>;
 }) => {
- const [Files, setFiles] = useState<File[] | null>(null);
  const [inputValue, setInputValue] = useState("");
  //  useEffect(() => {
  //   console.log(Files);
@@ -54,7 +57,7 @@ const DragandDrop = ({
     >
      <input
       id="images"
-      required
+      //   required
       accept="image/*"
       name="images"
       placeholder="images"

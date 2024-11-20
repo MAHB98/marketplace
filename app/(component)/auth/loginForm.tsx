@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import PasswordBtn from "../PasswordBtn";
 
 export const LoginForm = () => {
- // const [isPending, startTransition] = useTransition();
+ const [isPending, startTransition] = useTransition();
  // const param = useSearchParams();
  // const RedirectTo = param.get("callback");
  const [errorMassage, setErrorMassage] = useState<string | null>();
@@ -25,7 +25,7 @@ export const LoginForm = () => {
    <CardWrapper
     headerLabel="Welcome back"
     showSocial
-    backButtonHref="/register"
+    backButtonHref="/auth/register"
     backButton="Don't have an account "
     // fallback={RedirectTo}
    >
@@ -54,10 +54,12 @@ export const LoginForm = () => {
      //   }
      // }}
      action={async (form) =>
-      await submitHandler(form).then((data) => {
-       if (data?.error) {
-        setErrorMassage(data.error);
-       }
+      startTransition(async () => {
+       await submitHandler(form).then((data) => {
+        if (data?.error) {
+         setErrorMassage(data.error);
+        }
+       });
        {
        }
       })
@@ -76,12 +78,13 @@ export const LoginForm = () => {
      <FormErrorMassage error={errorMassage} />
      <Button
       type="submit"
+      disabled={isPending}
       className="font-Poppins font-semibold text-pretty w-full bg-slate-600 hover:bg-slate-500 h-10"
       //  disabled={form.formState.isSubmitting}
 
       // name="password"
      >
-      SignIn
+      {isPending ? "try to signIn" : "SignIn"}
      </Button>
      {/* {form.formState.isSubmitting ? "try to signIn" : "SignIn"} */}
     </form>

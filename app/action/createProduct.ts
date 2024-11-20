@@ -1,6 +1,7 @@
 "use server";
 import { addingProduct } from "@/lib/database";
 import { ProductSchema } from "@/type";
+import { ResultSetHeader } from "mysql2";
 import fs from "node:fs/promises";
 import { z } from "zod";
 export const createProduct = async (form: unknown) => {
@@ -11,9 +12,7 @@ export const createProduct = async (form: unknown) => {
   Object.fromEntries(form.entries())
  );
  if (success) {
-  console.log(data.category, "data.category");
-
-  addingProduct({
+  const res = (await addingProduct({
    subcategory: data.subcategory,
    category: data.category,
    image: data.image,
@@ -21,7 +20,10 @@ export const createProduct = async (form: unknown) => {
    name: data.name,
    Description: data.Description,
    Specifications: data.Specifications,
-  });
+  })) as ResultSetHeader;
+  console.log(res);
+  if (res.affectedRows) return "success";
+  else return null;
  }
  console.log(error?.errors);
 
