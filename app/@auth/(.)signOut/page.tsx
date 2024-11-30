@@ -6,8 +6,7 @@ import Link from "next/link";
 import { signOuter } from "./signOut";
 import { useState } from "react";
 import Modal from "@/components/Modal";
-const page = () => {
- const [isOpen, setIsOpen] = useState(true);
+const Page = () => {
  const router = useRouter();
  return (
   <Modal Description="are you really want to signout">
@@ -26,4 +25,4 @@ const page = () => {
   </Modal>
  );
 };
-export default page;
+export default Page;
