@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Register } from "@/app/action/register";
 import PasswordBtn from "../PasswordBtn";
-export const RegisterForm = () => {
+export const RegisterForm = ({ isModal }: { isModal?: boolean }) => {
  const [isPending, startTransition] = useTransition();
  //  const RedirectTo = param.get("callback");
  let RedirectTo = null;
@@ -19,15 +19,17 @@ export const RegisterForm = () => {
 
  const route = useRouter();
  return (
-  <div className="bg-blue-300">
+  <div className="">
    <CardWrapper
     headerLabel="Welcome back"
     showSocial
-    backButtonHref="/auth/signIn"
+    backButtonHref="/signIn"
     backButton="Already have an account "
+    isPending={isPending}
+    isModal={isModal}
    >
     <form
-     className="flex flex-col gap-2  "
+     className="space-y-6 flex flex-col "
      action={(form) => {
       startTransition(() => {
        Register(form, RedirectTo).then((data) => {
@@ -71,11 +73,7 @@ export const RegisterForm = () => {
      /> */}
      <PasswordBtn />
      {!!errorMassage && <p className="p-2 text-red-600">{errorMassage}</p>}
-     <Button
-      type="submit"
-      disabled={isPending}
-      className=" bg-slate-600 hover:bg-slate-500"
-     >
+     <Button type="submit" className=" bg-slate-600 hover:bg-slate-500">
       {/* {form.formState.isSubmitting ? "registering user" : "register"}
        */}
       {isPending ? "trying to registering you" : "register"}

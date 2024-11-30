@@ -7,8 +7,6 @@ const ProductRender = ({
 }: {
  product: z.infer<typeof ProductSchema>;
 }) => {
- console.log(product);
-
  const firstIndex = product.image.indexOf(",");
  const index = product.image.slice(0, firstIndex);
  return (

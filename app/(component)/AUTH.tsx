@@ -15,10 +15,10 @@ const AuthBtn = async () => {
      {session.user?.image && (
       <Image src={session.user.image} alt={""} height={10} width={10} />
      )}
-     <Link href={"/auth/signOut"}>signOut</Link>
+     <Link href={"/signOut"}>signOut</Link>
     </div>
    ) : (
-    <Link href={"/auth/signIn"}>signIn</Link>
+    <Link href={"/signIn"}>signIn</Link>
    )}
   </div>
  );

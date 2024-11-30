@@ -1,8 +1,6 @@
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
 import { adminRoute, authRoute, publicRoute } from "./allroute";
-import { NextResponse } from "next/server";
-// import { auth } from "./auth";
 
 const { auth } = NextAuth(authConfig);
 export default auth((req) => {
@@ -12,16 +10,16 @@ export default auth((req) => {
  if (!isLoggedIn) {
   if (!publicRoute.includes(nextUrl.pathname))
    if (!authRoute.includes(nextUrl.pathname)) {
-    console.log("redirected by middleware");
+    console.log(nextUrl, "redirected by middleware");
 
     return Response.redirect(
-     new URL("auth/signIn/" + `?callback=${nextUrl.pathname}`, nextUrl)
+     new URL("signIn/" + `?callback=${nextUrl.pathname}`, nextUrl)
     );
    }
  } else {
   if (authRoute.includes(nextUrl.pathname)) {
    return Response.redirect(
-    new URL(req.auth?.user?.role !== "admin" ? "/" : "/auth/admin", nextUrl)
+    new URL(req.auth?.user?.role !== "admin" ? "/" : "/admin", nextUrl)
    );
   }
   // else {

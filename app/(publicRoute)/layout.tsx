@@ -8,6 +8,7 @@ import AuthBtn from "@/app/(component)/AUTH";
 // } from "@/components/ui/card";
 // import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
+import Navbar from "../(component)/Navbar";
 // const font = Poppins({
 //   fallback: [""],
 //   style: ["italic"],
@@ -28,12 +29,9 @@ export default function MarketLayout({
  return (
   //   <div className="px-10 bg-slate-400 m-2 shadow-md w-full h-full ">
   <div className="w-full min-h-full   px-10  bg-slate-400 shadow-md">
-   <header className="flex flex-col ">
-    <h1 className={cn("text-3xl text-center  ", "font-serif")}>
-     Welcome to Marketplace
-    </h1>
-    <AuthBtn />
-   </header>
+   <Navbar />
+   <div id="Modal" />
+
    <div className="m-2">{children}</div>
   </div>
  );

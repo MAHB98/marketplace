@@ -3,7 +3,7 @@
  * to accesses them
  * @type {String[]}
  */
-export const authRoute: string[] = ["/auth/signIn", "/auth/register"];
+export const authRoute: string[] = ["/signIn", "/register"];
 /**
  * this is all public route customer allow
  * to accesses them
@@ -15,4 +15,4 @@ export const publicRoute: string[] = ["/"];
  * to accesses them
  * @type {String[]}
  */
-export const adminRoute: string[] = ["auth/admin", "/auth/setting"];
+export const adminRoute: string[] = ["admin", "/setting"];

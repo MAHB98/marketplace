@@ -8,6 +8,7 @@ import DragandDrop from "./DragandDrop";
 import { Input } from "@/components/ui/input";
 import FormErrorMassage from "./auth/form-error";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export const ProductForm = () => {
  const [errorMassage, setErrorMassage] = useState<string | null>();
@@ -25,7 +26,7 @@ export const ProductForm = () => {
    >
     <CardHeader>
      <CardTitle
-      className="w-full text-center capitalize
+      className="w-full text-center uppercase
      italic font-semibold font-mono "
      >
       Create a product
@@ -33,7 +34,7 @@ export const ProductForm = () => {
     </CardHeader>
     <CardContent className="font-Poppins align-middle ">
      <form
-      className="m-1 flex flex-col justify-center gap-8 space-y-2"
+      className="m-1 flex flex-col justify-center sm:gap-4 md:gap-6 lg:gap-8 "
       action={async (form) => {
        if (filePath) {
         form.delete("images");
@@ -103,7 +104,13 @@ export const ProductForm = () => {
        setFiles={setFiles}
       />
 
-      <Button className="self-center" disabled={isPending}>
+      <Button
+       className={cn(
+        "self-center uppercase hover:bg-green-300",
+        isPending && "bg-blue-400"
+       )}
+       disabled={isPending}
+      >
        {isPending ? "try to create product" : "create Product "}
       </Button>
      </form>

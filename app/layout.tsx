@@ -10,12 +10,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
  children,
+ auth,
 }: Readonly<{
  children: React.ReactNode;
+ auth: React.ReactNode;
 }>) {
  return (
   <html lang="en" suppressHydrationWarning>
-   <body className="min-h-max">
+   <body className="min-h-max select-none">
     <ThemeProvider
      attribute="class"
      defaultTheme="system"
@@ -23,6 +25,7 @@ export default function RootLayout({
      disableTransitionOnChange
     >
      <ToggleButton />
+     {auth}
      {children}
     </ThemeProvider>
    </body>

@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
-const PasswordBtn = () => {
+const PasswordBtn = ({ isPending }: { isPending?: boolean }) => {
  const [hiddenButton, setHiddenButton] = useState(false);
  return (
   <div className="relative">
@@ -11,6 +11,7 @@ const PasswordBtn = () => {
     id="password"
     name="password"
     required
+    disabled={isPending || false}
     className="font-Poppins font-medium text-balance text-slate-600 p-5"
    />
    <label

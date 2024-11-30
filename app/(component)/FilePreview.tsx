@@ -33,11 +33,11 @@ const FilePreview = ({
  }, [reres]);
  return (
   <div>
-   <table className="">
+   <table className="text-center">
     <thead className="bg-gray-800 ">
      <tr>
       <th className="px-8 text-left ">Preview</th>
-      <th className="px-8 text-left ">Name</th>
+      <th className="px-8 text-center ">Name</th>
       <th className="px-8 text-left ">size</th>
       <th className="px-8 text-left ">{click ? "status" : "Remove"}</th>
      </tr>
@@ -55,8 +55,10 @@ const FilePreview = ({
           src={URL.createObjectURL(ar)}
          />
         </td>
-        <td className="w- p-2 ">
-         <p className="whitespace-wrap">{ar.name}</p>
+        <td className=" text-center ">
+         <p className="whitespace-nowrap overflow-hidden  text-ellipsis  text-center line-clamp-1 w-28">
+          {ar.name}
+         </p>
         </td>
         <td align="center">
          <p>

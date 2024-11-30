@@ -32,7 +32,7 @@ export const submitHandler = async (
  const res = await signIn("credentials", {
   email,
   password,
-  redirectTo: RedirectTo || "/welcome",
+  redirectTo: "/welcome",
  }).catch((error) => {
   if (error instanceof AuthError) {
    switch (error.type) {
@@ -61,5 +61,6 @@ export const submitHandler = async (
    return { error: "something went wrong" };
   }
  });
+
  return res;
 };

@@ -4,6 +4,8 @@ import ProductRender from "../(component)/ProductRender";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { ProductSchema } from "@/type";
+import { FaSearch } from "react-icons/fa";
+import { Input } from "@/components/ui/input";
 const FirstPage = () => {
  const [product, setProduct] = useState<z.infer<typeof ProductSchema>[] | null>(
   null
@@ -13,9 +15,10 @@ const FirstPage = () => {
   const res = await fetch("/api/product");
   //  if (res) setProduct(res)
   if (res) {
-   const resJson = (await res.json()) as z.infer<typeof ProductSchema>[];
-   setProduct(resJson);
-   console.log(resJson);
+   const resJson = await res.json();
+   if (resJson && resJson.length > 0) {
+    setProduct(resJson);
+   } else console.log("error", resJson);
 
    //    console.log(resJson);
   }
