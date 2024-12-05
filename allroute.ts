@@ -9,7 +9,7 @@ export const authRoute: string[] = ["/signIn", "/register"];
  * to accesses them
  * @type {String[]}
  */
-export const publicRoute: string[] = ["/"];
+export const publicRoute: string[] = ["/", "/cart", "/newProduct"];
 /**
  * this is all  route only admin allowed
  * to accesses them
