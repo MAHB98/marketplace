@@ -13,22 +13,17 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 const CartPage = () => {
  const product = useProduct((state) => state.product);
  const setProduct = useProduct((state) => state.setProduct);
- useEffect(() => {
-  !product &&
-   setProduct(
-    product ||
-     JSON.parse((localStorage && localStorage.getItem("product")) || "null")
-   );
- }, []);
  const removeProduct = useProduct((state) => state.removeProduct);
  const reduceProduct = useProduct((state) => state.reduceProduct);
  const addProduct = useProduct((state) => state.addProduct);
  //  setJsonProduct(JSON.parse(product || ""));
-
+ useEffect(() => {
+  useProduct.persist.rehydrate();
+ }, []);
  return (
   <>
    {product ? (
-    <div className="flex flex-col gap-5 ">
+    <div className="flex flex-col gap-5 outline-none">
      {product.map((ar) => (
       <div
        className="flex flex-row  bg-rose-600 flex-initial justify-between"
@@ -36,7 +31,7 @@ const CartPage = () => {
       >
        <ProductRender product={ar} />
        <div className=" flex flex-row items-center  ">
-        <div className="flex flex-row mr-1 bg-green-500 *:bg-transparent rounded-full">
+        <div className="flex flex-row mr-1 bg-green-500 *:bg-transparent *:hover:bg-transparent rounded-full">
          {ar.repeat > 1 ? (
           <Button className="" onClick={() => reduceProduct(ar.id as number)}>
            <FaMinus className="w-3 h-3" />

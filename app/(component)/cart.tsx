@@ -5,7 +5,7 @@ import {
  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaShoppingBag } from "react-icons/fa";
 import { cart } from "../(publicRoute)/page";
@@ -27,23 +27,22 @@ const Cart = () => {
  //   }
  //  }
  const router = useRouter();
+ const pathname = usePathname() === "/cart";
 
  return (
   <div
-   onMouseEnter={(e) => {
-    console.log("mouse enter");
-
-    setOnHover(true);
+   onMouseEnter={() => {
+    !pathname && setOnHover(true);
    }}
    onMouseLeave={() => setOnHover(false)}
    onClick={() => router.push("/cart")}
    className=" flex"
   >
-   <Button className="bg-secondary-foreground relative outline-none border-2 rounded-full">
-    <FaShoppingBag className="fill-[#33c452] h-5 w-5" />
+   <Button className="bg-transparent relative outline-none hover:bg-transparent ">
+    <FaShoppingBag className="fill-primary h-5 w-5" />
     <div
      className={cn(
-      "rounded-full bg-destructive  flex justify-center content-center text-primary w-4 h-4 absolute -bottom-1 right-0  ",
+      "rounded-full bg-destructive  flex justify-center content-center text-primary w-4 h-4 absolute -bottom-0 right-2  ",
       !total && "hidden"
      )}
     >

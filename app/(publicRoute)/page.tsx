@@ -51,12 +51,12 @@ const FirstPage = () => {
  const [product, setProduct] = useState<productType[] | null>(null);
  const cart = useProduct((state) => state.product);
  const setCart = useProduct((state) => state.setProduct);
- useEffect(() => {
-  cart && localStorage.setItem("product", JSON.stringify(cart));
- }, [cart]);
- useEffect(() => {
-  !cart && setCart(JSON.parse(localStorage.getItem("product") || "null"));
- }, []);
+ //  useEffect(() => {
+ //   cart && localStorage.setItem("product", JSON.stringify(cart));
+ //  }, [cart]);
+ //  useEffect(() => {
+ //   !cart && setCart(JSON.parse(localStorage.getItem("product") || "null"));
+ //  }, []);
  const fetchProduct = async () => {
   const res = await fetch("/api/product");
   //  if (res) setProduct(res)
@@ -77,6 +77,7 @@ const FirstPage = () => {
  //  }, []);
  useEffect(() => {
   fetchProduct();
+  useProduct.persist.rehydrate();
  }, []);
  return (
   <div>

@@ -12,6 +12,9 @@ const ToggleButton = () => {
   setMounted(true);
  }, []);
  const tip = "border-2 rounded-full border-blue-200 bg-black w-8 h-6 flex ";
+ const changeTheme = () => {
+  setTheme(resolvedTheme === "light" ? "dark" : "light");
+ };
  if (!mounted) {
   return null;
  }
@@ -19,9 +22,8 @@ const ToggleButton = () => {
   <div className=" absolute right-0 top-0">
    <div
     className={cn(tip, resolvedTheme == "dark" && "justify-end bg-white ")}
-    onClick={() => {
-     setTheme(resolvedTheme === "light" ? "dark" : "light");
-    }}
+    onClick={changeTheme}
+    // onTouchStart={changeTheme}
    >
     <button className=" border-2 bg-gray-500 h-full w-4/6 rounded-full my-auto">
      {resolvedTheme === "dark" ? <IoMdSunny /> : <IoMdMoon />}

@@ -28,7 +28,7 @@ export default function MarketLayout({
 }>) {
  return (
   //   <div className="px-10 bg-slate-400 m-2 shadow-md w-full h-full ">
-  <div className=" min-h-full   smd:px-10  bg-slate-400 shadow-md">
+  <div className=" min-h-full ssm:px-2 ssm:pt-5  smd:px-10  bg-slate-400 shadow-md">
    <Navbar />
    <div id="Modal" />
 

@@ -13,20 +13,20 @@ import Cart from "./cart";
 
 const CustomerNav = ({ session }: { session: Session | null }) => {
  return (
-  <nav className="relative  w-full flex flex-row items-center px-2 py-7 justify-between ">
+  <nav className="relative  w-full flex flex-row items-center px-2  sm:py-7 justify-between ">
    <div className="flex basis-3/4 2xl:basis-1/2 ">
-    <div className="w-fit flex-1 flex justify-evenly">
-     <Link href={"/"} className="ssm:hidden smd:inline-block smd:basis-1/12">
-      <Image className="max-h-14" src={newDiamond} alt="Logo" />
+    <div className="w-fit flex-1  basis-1/6 flex justify-evenly">
+     <Link href={"/"} className="hidden sm:inline-block smd:basis-1/12">
+      <Image className="max-h-14 max-w-14" src={newDiamond} alt="Logo" />
      </Link>
 
      <div className="ssm:hidden smd:inline-block  smd:basis-1/4 mmd:basis-1/6 flex flex-col  capitalize text-center text-primary">
-      <p className="tracking-tighter text-center">welcome To</p>
+      <p className="tracking-tighter text-center ">welcome To</p>
       <span className=" uppercase italic font-mono font-semibold tracking-wide ssm:text-lg sm:text-base md:text-lg">
        marketplace
       </span>
      </div>
-     <form className="smd:basis-5/12 mmd:basis-1/2 flex flex-1 smd:self-center ml-2">
+     <form className="smd:basis-5/12 mmd:basis-1/2 flex ssm:basis-5/6 flex-1 self-center  ml-2">
       <div
        className=" flex flex-1 w-max items-center p-2 rounded-xl bg-primary text-primary-foreground h-10 px-3 py-2  ring-offset-background  font-mono focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
      "
@@ -62,7 +62,7 @@ const CustomerNav = ({ session }: { session: Session | null }) => {
      //   </div>
      //  </div>
      <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-end border-none outline-none">
+      <DropdownMenuTrigger className="flex items-center  border-none   sm:px-4 py-2 outline-none">
        <IoMdPerson className="w-6 h-6" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="flex flex-col text-center">
