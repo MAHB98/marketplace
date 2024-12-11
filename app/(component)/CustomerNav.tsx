@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { FaSearch, FaShoppingBag } from "react-icons/fa";
@@ -10,13 +11,23 @@ import {
  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Cart from "./cart";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const CustomerNav = ({ session }: { session: Session | null }) => {
+ const pathname = usePathname() === "/cart";
+
  return (
   <nav className="relative  w-full flex flex-row items-center px-2  sm:py-7 justify-between ">
    <div className="flex basis-3/4 2xl:basis-1/2 ">
     <div className="w-fit flex-1  basis-1/6 flex justify-evenly">
-     <Link href={"/"} className="hidden sm:inline-block smd:basis-1/12">
+     <Link
+      href={"/"}
+      className={cn(
+       "hidden sm:inline-block smd:basis-1/12",
+       pathname && "inline-block"
+      )}
+     >
       <Image className="max-h-14 max-w-14" src={newDiamond} alt="Logo" />
      </Link>
 
@@ -93,7 +104,7 @@ const CustomerNav = ({ session }: { session: Session | null }) => {
       </Link>
      </div>
     )}
-    <Cart />
+    <Cart pathname={pathname} />
    </div>
   </nav>
  );

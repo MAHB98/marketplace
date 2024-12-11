@@ -1,6 +1,6 @@
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
-import { adminRoute, authRoute, publicRoute } from "./allroute";
+import { adminRoute, apiRoute, authRoute, publicRoute } from "./allroute";
 
 const { auth } = NextAuth(authConfig);
 export default auth((req) => {
@@ -9,13 +9,14 @@ export default auth((req) => {
 
  if (!isLoggedIn) {
   if (!publicRoute.includes(nextUrl.pathname))
-   if (!authRoute.includes(nextUrl.pathname)) {
-    console.log(nextUrl, "redirected by middleware");
+   if (!apiRoute.includes(nextUrl.pathname))
+    if (!authRoute.includes(nextUrl.pathname)) {
+     console.log(nextUrl, "redirected by middleware");
 
-    return Response.redirect(
-     new URL("signIn/" + `?callback=${nextUrl.pathname}`, nextUrl)
-    );
-   }
+     return Response.redirect(
+      new URL("signIn/" + `?callback=${nextUrl.pathname}`, nextUrl)
+     );
+    }
  } else {
   if (authRoute.includes(nextUrl.pathname)) {
    return Response.redirect(
@@ -36,26 +37,6 @@ export default auth((req) => {
 });
 export const config = {
  matcher: [
-  {
-   source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-   missing: [
-    { type: "header", key: "next-router-prefetch" },
-    { type: "header", key: "purpose", value: "prefetch" },
-   ],
-  },
-
-  {
-   source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-   has: [
-    { type: "header", key: "next-router-prefetch" },
-    { type: "header", key: "purpose", value: "prefetch" },
-   ],
-  },
-
-  {
-   source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-   has: [{ type: "header", key: "x-present" }],
-   missing: [{ type: "header", key: "x-missing", value: "prefetch" }],
-  },
+  "/((?!api/auth/*|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
  ],
 };

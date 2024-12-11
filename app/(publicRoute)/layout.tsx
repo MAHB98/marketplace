@@ -28,11 +28,11 @@ export default function MarketLayout({
 }>) {
  return (
   //   <div className="px-10 bg-slate-400 m-2 shadow-md w-full h-full ">
-  <div className=" min-h-full ssm:px-2 ssm:pt-5  smd:px-10  bg-slate-400 shadow-md">
+  <div className=" min-h-full ssm:px-2 ssm:pt-5  smd:px-10  bg-slate-400 shadow-md flex flex-col">
    <Navbar />
    <div id="Modal" />
 
-   <div className="m-2">{children}</div>
+   <div className="m-2 flex-1 h-full flex flex-col">{children}</div>
   </div>
  );
 }

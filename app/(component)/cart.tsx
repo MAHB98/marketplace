@@ -4,18 +4,15 @@ import {
  DropdownMenuContent,
  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FaShoppingBag } from "react-icons/fa";
-import { cart } from "../(publicRoute)/page";
-import Image from "next/image";
 import ProductRender from "./ProductRender";
 import { Button } from "@/components/ui/button";
-import { useProduct } from "@/lib/ProductHook";
+import { useProduct } from "@/store/ProductHook";
 import { cn } from "@/lib/utils";
 
-const Cart = () => {
+const Cart = ({ pathname }: { pathname: boolean }) => {
  const [onHover, setOnHover] = useState(false);
  const cartItem = useProduct((state) => state.product);
  let totalProduct = useProduct((state) => state.totalProduct);
@@ -27,7 +24,6 @@ const Cart = () => {
  //   }
  //  }
  const router = useRouter();
- const pathname = usePathname() === "/cart";
 
  return (
   <div
@@ -36,7 +32,7 @@ const Cart = () => {
    }}
    onMouseLeave={() => setOnHover(false)}
    onClick={() => router.push("/cart")}
-   className=" flex"
+   className={cn(" flex", pathname && "hidden")}
   >
    <Button className="bg-transparent relative outline-none hover:bg-transparent ">
     <FaShoppingBag className="fill-primary h-5 w-5" />
@@ -54,10 +50,15 @@ const Cart = () => {
 
     <DropdownMenuContent className="z-[1000]" align="end">
      {cartItem && cartItem.length > 0 ? (
-      cartItem.map((ar) => (
-       <ProductRender product={ar} isDropdown key={ar.id} />
-      ))
+      <div>
+       {cartItem.map((ar) => (
+        <ProductRender key={ar.id} product={ar} isDropdown />
+       ))}
+      </div>
      ) : (
+      //   cartItem.map((ar) => (
+      //    <ProductRender product={ar} isDropdown key={ar.id} />
+      //   ))
       <p>your ShoppingBag is empty</p>
      )}
     </DropdownMenuContent>

@@ -1,7 +1,6 @@
 "use client";
 import { productType } from "@/type";
 import Image from "next/image";
-import { cart } from "../(publicRoute)/page";
 
 const ProductRender = ({
  product,
@@ -14,7 +13,7 @@ const ProductRender = ({
  const index = product.image.slice(0, firstIndex);
 
  return (
-  <div className=" flex flex-row gap-2 ">
+  <div className=" flex flex-row gap-2 flex-1 ">
    <Image
     src={`https://ik.imagekit.io/lnxbd5mpv${
      firstIndex > 0 ? index : product.image
@@ -25,8 +24,10 @@ const ProductRender = ({
     height={500}
    />
    {!isDropdown && (
-    <div className="flex-1 flex flex-col gap-2 justify-center items-center text-center">
-     <p className="w-1/3 tracking-tighter line-clamp-3	">{product.name}</p>
+    <div className="flex-1 flex flex-col gap-2  self-center items-center justify-center ">
+     <p className=" tracking-tighter line-clamp-3 text-center w-1/2">
+      {product.name}
+     </p>
      <p>{"$" + product.price}</p>
     </div>
    )}

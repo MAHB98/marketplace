@@ -23,7 +23,6 @@ export const userFinder = z.object({
  role: z.string(),
 });
 export const ProductSchema = z.object({
- id: z.number().optional(),
  name: z.string().min(1, "name is require"),
  //  price: z.coerce.number().min(1, "price is require"),
  price: z.string().min(1),
@@ -34,4 +33,7 @@ export const ProductSchema = z.object({
  subcategory: z.string(),
 });
 export const partialSchema = userSchema.partial();
-export type productType = z.infer<typeof ProductSchema>;
+export type SubmitProductType = z.infer<typeof ProductSchema>;
+export type productType = SubmitProductType & { id: number };
+export type cart = productType & { repeat: number };
+export type productHook = { id: number; repeat: number };

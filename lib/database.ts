@@ -48,3 +48,20 @@ export const getProducts = async ({ limit }: { limit: string }) => {
 
  return res;
 };
+export const getProduct = async ({ id }: { id: number[] | number }) => {
+ if (Array.isArray(id)) {
+  if (id.length > 0) {
+   const sql = `SELECT * from products where id in (${id.map(() => "?")})`;
+   const [res] = await pool.query(sql, id);
+
+   return res;
+  } else {
+   return null;
+  }
+ } else {
+  const sql = `select * from product where id =?`;
+  const [res] = await pool.execute(sql, [id]);
+
+  return res;
+ }
+};

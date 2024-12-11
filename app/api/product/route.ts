@@ -1,6 +1,7 @@
 import { pool } from "@/lib/database";
 import { NextResponse } from "next/server";
 import { ErrorPacketParams } from "mysql2/";
+import { error } from "console";
 export const GET = async () => {
  const limit = 10;
  const sql = `SELECT * from products order by id desc limit 10`;
@@ -10,6 +11,8 @@ export const GET = async () => {
   return NextResponse.json(db);
  } catch (err) {
   if (err instanceof Error) {
+   console.log(error);
+
    let sqlerr = err as ErrorPacketParams;
    if (sqlerr.code == "ETIMEDOUT" || "EAI_AGAIN")
     return NextResponse.json({ error: "network problem" });

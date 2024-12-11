@@ -22,6 +22,7 @@
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "firacode": "^6.2.0",
+    "immer": "^10.1.1",
     "lucide-react": "^0.456.0",
     "mysql2": "^3.11.4",
     "next": "15.0.3",

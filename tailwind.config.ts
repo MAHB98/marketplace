@@ -27,6 +27,7 @@ const config = {
    },
    colors: {
     border: "hsl(var(--border))",
+    darkSlate: "hsl(var(--darkSlate))",
     input: "hsl(var(--input))",
     ring: "hsl(var(--ring))",
     background: "hsl(var(--background))",

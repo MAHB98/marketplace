@@ -15,4 +15,10 @@ export const publicRoute: string[] = ["/", "/cart", "/newProduct"];
  * to accesses them
  * @type {String[]}
  */
-export const adminRoute: string[] = ["admin", "/setting"];
+export const adminRoute: string[] = ["/admin", "/setting"];
+/**
+ * this is all  route only admin allowed
+ * to accesses them
+ * @type {String[]}
+ */
+export const apiRoute: string[] = ["/api/product", "/api/shoppingCart"];
