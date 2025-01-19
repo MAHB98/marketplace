@@ -65,3 +65,48 @@ export const getProduct = async ({ id }: { id: number[] | number }) => {
   return res;
  }
 };
+export const GetShoppingBag = async ({ id }: { id: number[] | number }) => {
+ if (Array.isArray(id)) {
+  if (id.length > 0) {
+   const sql = `SELECT * from shoppingBag where userid in (${id.map(
+    () => "?"
+   )})`;
+   const [res] = await pool.query(sql, id);
+
+   return res;
+  } else {
+   return null;
+  }
+ } else {
+  const sql = `select * from shoppingBag where userId =? `;
+  const [res] = await pool.execute(sql, [id]);
+
+  return res;
+ }
+};
+export const updateQuantity = async ({
+ userId,
+ productId,
+ quantity,
+}: {
+ userId: number;
+ productId: number;
+ quantity: number;
+}) => {
+ const sql = `update shoppingBag set quantity =? where productId=? and userId=?`;
+ const [res] = await pool.execute(sql, [quantity, productId, userId]);
+ return res;
+};
+export const addItemToShoppingBag = async ({
+ userId,
+ productId,
+ quantity,
+}: {
+ userId: number;
+ productId: number;
+ quantity: number;
+}) => {
+ const sql = `insert into  shoppingBag (userid,quantity,productId)value(?,?,?)`;
+ const [res] = await pool.execute(sql, [userId, quantity, productId]);
+ return res;
+};

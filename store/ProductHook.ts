@@ -3,7 +3,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createSelectors } from "@/utils/createSelectors";
-import clientBag from "@/lib/clientBag";
 type Product = {
  product: cart[] | null;
  persistProduct: productHook[] | null;

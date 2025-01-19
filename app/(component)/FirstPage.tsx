@@ -1,13 +1,13 @@
 "use client";
 import ProductRender from "../(component)/ProductRender";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { cart, productHook, ProductSchema, productType } from "@/type";
+import { productType } from "@/type";
 import { useProduct } from "@/store/ProductHook";
 import { Button } from "@/components/ui/button";
 import { Session } from "next-auth";
-import { shoppingBag } from "@/lib/shoppingBag";
 import { useShallow } from "zustand/shallow";
 import clientBag from "@/lib/clientBag";
+import { addItem, update } from "../(publicRoute)/cart/serverCart";
 const FirstPage = ({ session }: { session: Session | null }) => {
  const [product, setProduct] = useState<productType[] | null>(null);
 
@@ -18,18 +18,6 @@ const FirstPage = ({ session }: { session: Session | null }) => {
    addProduct: state.addProduct,
   }))
  );
- //  const getPersist = async () => {
- //   if (useProduct.persist.hasHydrated()) {
- //    clientBag();
- //   }
- //  };
- //  const res = async () => {
- //   const res = await shoppingBag({
- //    product: useProduct.getState().persistProduct,
- //   });
- //   if (res) setCart(res);
- //   console.log(res, "from first page res");
- //  };
  const fetchProduct = async () => {
   const res = await fetch("/api/product", { cache: "reload" });
 
@@ -53,13 +41,37 @@ const FirstPage = ({ session }: { session: Session | null }) => {
       <ProductRender product={ar} />
       <Button
        className="self-center"
-       onClick={() => {
-        if (cart?.find((element) => element.id === ar.id)) {
-         addProduct(ar.id);
+       onClick={async () => {
+        if (session) {
+         if (cart?.find((element) => element.id === ar.id)) {
+          if (
+           await update({
+            userId: Number(session.user.id),
+            productId: ar.id,
+            quantity: 1,
+           })
+          )
+           addProduct(ar.id);
+         } else {
+          if (
+           await addItem({
+            userId: Number(session.user.id),
+            productId: ar.id,
+            quantity: 1,
+           })
+          )
+           setCart(
+            cart ? [...cart, { ...ar, repeat: 1 }] : [{ ...ar, repeat: 1 }]
+           );
+         }
         } else {
-         setCart(
-          cart ? [...cart, { ...ar, repeat: 1 }] : [{ ...ar, repeat: 1 }]
-         );
+         if (cart?.find((element) => element.id === ar.id)) {
+          addProduct(ar.id);
+         } else {
+          setCart(
+           cart ? [...cart, { ...ar, repeat: 1 }] : [{ ...ar, repeat: 1 }]
+          );
+         }
         }
        }}
       >
